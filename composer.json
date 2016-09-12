@@ -1,0 +1,5 @@
+{
+  "require": {
+    "bhubr/wp-rest-plugin-boilerplate": "^0.6.8"
+  }
+}

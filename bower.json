@@ -1,0 +1,21 @@
+{
+  "name": "rbp-test-plugin",
+  "authors": [
+    "Benoît Hubert <benoithubert@gmail.com>"
+  ],
+  "description": "",
+  "main": "rbp-test-plugin.php",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "qunit": "^2.0.1"
+  }
+}
