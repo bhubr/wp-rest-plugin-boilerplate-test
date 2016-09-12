@@ -29,7 +29,7 @@ class RBP_Test_Plugin {
         'types' => [
             'foo' => [  // key is type name (singular, lower-case)
                 'name_s'   => 'Foo',  // label (singular)
-                'fields'   => ['blop', 'blap'],
+                'fields'   => ['foo_type', 'foo_number'],
                 'taxonomies' => [
                     'foo_cat' => [
                         'name_s' => 'Foo Cat',
