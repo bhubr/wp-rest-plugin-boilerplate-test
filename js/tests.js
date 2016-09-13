@@ -13,7 +13,8 @@ function sendRequest(relativeUrl, method, payload) {
         resolve(data);
       },
       error: function(jqXHR, textStatus, errorThrown) {
-        reject(errorThrown)
+        console.error(errorThrown);
+        reject(errorThrown);
       } });
   });
 }
@@ -30,6 +31,11 @@ var requests = {
   create: function(payload) {
     console.log('createObject', payload);
     return sendRequest('', 'POST', payload);
+  },
+
+  update: function(id, payload) {
+    console.log('updateObject', payload);
+    return sendRequest('/' + id, 'POST', payload);
   },
 
   delete: function(id) {
@@ -49,11 +55,12 @@ var requests = {
 
 $(document).ready(function() {
 
-  QUnit.test( "Test Object (of type Post) creation/read/delete by POST request", function( assert ) {
+  QUnit.test( "Test Object (of type Post) creation/read/update/delete by POST request", function( assert ) {
     var done = assert.async();
     var timestamp = getTimestamp();
     var payload = getPayload(timestamp);
     var postId;
+    // Test CREATE
     requests.create(payload).then(function(data) {
       var keys = Object.keys(data);
       assert.equal(data.name, 'blah@blah.com ' + timestamp);
@@ -65,14 +72,42 @@ $(document).ready(function() {
       assert.equal(keys.length, 7);
       assert.deepEqual(keys, ['id', 'slug', 'name', 'description', 'foo_type', 'foo_number', 'ignored_field']);
       postId = data.id;
-      return requests.read(postId);
+      return postId;
     })
-    .then(function(data) {
-      assert.equal(data.id, postId);
-      requests.delete(data.id).then(function(result) {
+    // Test READ ONE
+    .then(function(postId) {
+      return requests.read(postId)
+      .then(function(data) {
+        assert.equal(data.id, postId);
+        return data;
+      })
+    })
+    // Test UPDATE
+    .then(function(post) {
+      var updated = JSON.parse(payload);
+      updated.description = 'This is not a Foo but a Bar';
+      updated.foo_type = 'Bar';
+      updated.foo_number = 7;
+      return requests.update(postId, JSON.stringify(updated))
+      .then(function(data) {
+        var keys = Object.keys(data);
+        assert.equal(keys.length, 7);
+        assert.equal(data.description, 'This is not a Foo but a Bar');
+        assert.equal(data.foo_type, 'Bar');
+        assert.equal(data.foo_number, 7);
+        return data.id;
+      });
+    })
+    // Test DELETE
+    .then(function(postId) {
+      requests.delete(postId).then(function(result) {
         assert.ok(result.success);
         done();
       });
+    })
+    .catch(function(error) {
+      assert.ok(false, error);
+      done();
     });
   });
 
@@ -108,6 +143,10 @@ $(document).ready(function() {
     .then(function(results) {
       assert.ok(results[0].success);
       assert.ok(results[1].success);
+      done();
+    })
+    .catch(function(error) {
+      assert.ok(false);
       done();
     });
   });
