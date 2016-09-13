@@ -16,6 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "qunit": "^2.0.1"
+    "qunit": "^2.0.1",
+    "bluebird": "^3.4.6"
   }
 }

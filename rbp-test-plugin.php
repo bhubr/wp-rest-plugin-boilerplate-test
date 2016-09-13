@@ -1,6 +1,7 @@
 <?php
 namespace bhubr;
 require 'vendor/autoload.php';
+
 /*
  * Plugin Name: WP REST Plugin Boilerplate Test Plugin 2
  * Version: 0.1
@@ -92,6 +93,7 @@ class RBP_Test_Plugin {
         $plugin_dir = basename(dirname(__FILE__));
         if($page === 'toplevel_page_rest-plugin-test') {
             wp_enqueue_script('qunit', plugins_url() . '/' . self::PLUGIN_NAME . '/bower_components/qunit/qunit/qunit.js', []);
+            wp_enqueue_script('bluebird', plugins_url() . '/' . self::PLUGIN_NAME . '/bower_components/bluebird/js/browser/bluebird.min.js', []);
             wp_enqueue_script('qunit-test-suite', plugins_url() . '/' . self::PLUGIN_NAME . '/js/tests.js', ['jquery-core', 'qunit']);
             wp_enqueue_style('qunit', plugins_url() . '/' . self::PLUGIN_NAME . '/bower_components/qunit/qunit/qunit.css');
         }
