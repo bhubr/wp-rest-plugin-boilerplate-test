@@ -37,6 +37,10 @@ var requests = {
     return sendRequest('/' + id, 'DELETE');
   },
 
+  read: function(id) {
+    return sendRequest('/' + id, 'GET');
+  },
+
   readAll: function() {
     return sendRequest('', 'GET');
   }
@@ -49,6 +53,7 @@ $(document).ready(function() {
     var done = assert.async();
     var timestamp = getTimestamp();
     var payload = getPayload(timestamp);
+    var postId;
     requests.create(payload).then(function(data) {
       var keys = Object.keys(data);
       assert.equal(data.name, 'blah@blah.com ' + timestamp);
@@ -59,6 +64,11 @@ $(document).ready(function() {
       assert.equal(data.ignored_field, 'ignored');
       assert.equal(keys.length, 7);
       assert.deepEqual(keys, ['id', 'slug', 'name', 'description', 'foo_type', 'foo_number', 'ignored_field']);
+      postId = data.id;
+      return requests.read(postId);
+    })
+    .then(function(data) {
+      assert.equal(data.id, postId);
       requests.delete(data.id).then(function(result) {
         assert.ok(result.success);
         done();
