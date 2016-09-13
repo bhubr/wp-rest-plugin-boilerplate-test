@@ -35,6 +35,10 @@ var requests = {
   delete: function(id) {
     console.log('deleteObject');
     return sendRequest('/' + id, 'DELETE');
+  },
+
+  readAll: function() {
+    return sendRequest('', 'GET');
   }
 
 } 
@@ -79,7 +83,10 @@ $(document).ready(function() {
       id2 = datas[1].id;
     })
     .then(function() {
-      return;
+      return requests.readAll();
+    })
+    .then(function(datas) {
+      assert.equal(datas.length, 2);
     })
     .then(function() {
       return Promise.all([
