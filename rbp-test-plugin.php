@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 
 /*
  * Plugin Name: WP REST Plugin Boilerplate Test Plugin 2
- * Version: 0.1
+ * Version: 0.2.0
  * Description: A bloody entangled mess of spaghetti code.
  * Author: T1z
  * Author URI: https://github.com/t1z

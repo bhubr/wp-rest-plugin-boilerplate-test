@@ -86,7 +86,8 @@ $(document).ready(function() {
       return requests.readAll();
     })
     .then(function(datas) {
-      assert.equal(datas.length, 2);
+      assert.equal(datas[0].id, id1);
+      assert.equal(datas[1].id, id2);
     })
     .then(function() {
       return Promise.all([
