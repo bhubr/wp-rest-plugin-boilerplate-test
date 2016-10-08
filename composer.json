@@ -1,6 +1,6 @@
 {
   "minimum-stability": "dev",
   "require": {
-    "bhubr/wp-rest-plugin-boilerplate": "0.6.24"
+    "bhubr/wp-rest-plugin-boilerplate": "dev-master"
   }
 }

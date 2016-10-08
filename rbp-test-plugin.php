@@ -26,24 +26,24 @@ class RBP_Test_Plugin {
     /**
      * Descriptor holding the types (among other things in the future?)
      */
-    protected $plugin_descriptor = [
-        'types' => [
-            'foo' => [  // key is type name (singular, lower-case)
-                'name_s'   => 'Foo',  // label (singular)
-                'fields'   => ['foo_type', 'foo_number'],
-                'taxonomies' => [
-                    'foo_cat' => [
-                        'name_s' => 'Foo Cat',
-                        'fields' => ['baaar', 'caaat']
-                    ],
-                    'foo_tag' => [
-                        'name_s' => 'Foo Tag',
-                        'fields' => ['foooo', 'taaag']
-                    ]
-                ]
-            ]
-        ]
-    ];
+    // protected $plugin_descriptor = [
+    //     'types' => [
+    //         'foo' => [  // key is type name (singular, lower-case)
+    //             'name_s'   => 'Foo',  // label (singular)
+    //             'fields'   => ['foo_type', 'foo_number'],
+    //             'taxonomies' => [
+    //                 'foo_cat' => [
+    //                     'name_s' => 'Foo Cat',
+    //                     'fields' => ['baaar', 'caaat']
+    //                 ],
+    //                 'foo_tag' => [
+    //                     'name_s' => 'Foo Tag',
+    //                     'fields' => ['foooo', 'taaag']
+    //                 ]
+    //             ]
+    //         ]
+    //     ]
+    // ];
 
     /**
      * Constructor
@@ -57,11 +57,11 @@ class RBP_Test_Plugin {
         add_action('admin_menu', [$this, 'register_pages']);
         add_action('admin_enqueue_scripts',  array(&$this, 'admin_pages_enqueue_scripts') );
 
-        $wppc = REST_Plugin_Boilerplate::get_instance(__DIR__);
-        $wppc->register_plugin(self::PLUGIN_NAME, $this->plugin_descriptor);
-        register_activation_hook( __FILE__, function() use($wppc) {
-            $wppc->create_term_meta_tables(self::PLUGIN_NAME);
-        });
+        $wppc = REST\Plugin_Boilerplate::get_instance();
+        $wppc->register_plugin(self::PLUGIN_NAME, __DIR__);
+        // register_activation_hook( __FILE__, function() use($wppc) {
+        //     $wppc->create_term_meta_tables(self::PLUGIN_NAME);
+        // });
 
     }
 
